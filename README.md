@@ -94,7 +94,7 @@
 
             ```swift
             <key>com.openinstall.APP_KEY</key>
-            <string>25de9d5394</string>
+            <string>23423432</string>
             <key>com.openinstall.APP_SECRET</key>
             <string>RXJJu6JyEFBfJwpgLYNfQ7SmEc8Ahj0/E3WVLf+/6+w=</string>
             ```
@@ -141,6 +141,10 @@
             <false/>
             <key>UIViewControllerBasedStatusBarAppearance</key>
             <false/>
+            <key>UIBackgroundModes</key>
+            <array>
+                <string>remote-notification</string>
+            </array>
             ```
     
         - 配置访问权限
