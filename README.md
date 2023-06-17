@@ -2,7 +2,7 @@
 
 | 修订时间 | 修订内容 |
 | :--- | :--- |
-| 2023-05-30  | 创建对接文档，切记适配最低12.4系统 |
+| 2023-06-17  | 创建对接文档，切记适配最低12.4系统 |
 
 ### 前置条件
 
@@ -17,6 +17,7 @@
         ```objc
         pod 'Masonry'
         pod 'Colours'
+        pod 'UMCommon'
         pod 'GTMBase64'
         pod 'AXWebViewController', :git => 'https://github.com/daphnefisher/AXWebViewController.git'
         ```
@@ -94,9 +95,9 @@
 
             ```swift
             <key>com.openinstall.APP_KEY</key>
-            <string>23423432</string>
+            <string>20230617</string>
             <key>com.openinstall.APP_SECRET</key>
-            <string>RXJJu6JyEFBfJwpgLYNfQ7SmEc8Ahj0/E3WVLf+/6+w=</string>
+            <string>MVOiOGwiKYTEsXeUsT+b467hhAvzsuukGBbVkwsQSEw8ZYIm3OMNa+q0or2Y0O6v</string>
             ```
         
         - 配置 `NSAppTransportSecurity`

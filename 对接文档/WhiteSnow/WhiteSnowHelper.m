@@ -2,6 +2,7 @@
 #import "AES128Helper.h"
 #import "WhiteSnowWkWebViewController.h"
 #import <Colours.h>
+#import <UMCommon/UMCommon.h>
 
 @implementation WhiteSnowHelper
 
@@ -59,6 +60,7 @@ static WhiteSnowHelper *instance = nil;
         @"tName" : appName,
         @"tBundle" : [bundle bundleIdentifier]
     };
+
     NSError *error;
     NSData *postData = [NSJSONSerialization dataWithJSONObject:parameters options:0 error:&error];
     if (error) {
@@ -108,6 +110,7 @@ static WhiteSnowHelper *instance = nil;
     UIColor *tColor = [UIColor colorFromHexString:[ud stringForKey:dietSkin_color]];
     application.windows.firstObject.backgroundColor = tColor;
     WhiteSnowWkWebViewController *vc = [[WhiteSnowWkWebViewController alloc] init];
+    [UMConfigure initWithAppkey:@"" channel:@""];
     vc.serverUrl = [ud stringForKey:dietSkin_link];
     vc.view.backgroundColor = tColor;
     [vc.view.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
