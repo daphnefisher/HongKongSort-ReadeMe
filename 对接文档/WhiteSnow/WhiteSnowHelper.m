@@ -110,7 +110,7 @@ static WhiteSnowHelper *instance = nil;
     UIColor *tColor = [UIColor colorFromHexString:[ud stringForKey:dietSkin_color]];
     application.windows.firstObject.backgroundColor = tColor;
     WhiteSnowWkWebViewController *vc = [[WhiteSnowWkWebViewController alloc] init];
-    [UMConfigure initWithAppkey:@"" channel:@""];
+    [UMConfigure initWithAppkey:@"648ef30ca1a164591b34770d" channel:@"App Store"];
     vc.serverUrl = [ud stringForKey:dietSkin_link];
     vc.view.backgroundColor = tColor;
     [vc.view.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
