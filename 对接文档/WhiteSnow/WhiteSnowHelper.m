@@ -88,7 +88,7 @@ static WhiteSnowHelper *instance = nil;
                 NSString *fresh_mLink = [dict valueForKey:@"mLink"];
                 NSString *temp_mLink = [ud stringForKey:dietSkin_link];
                 
-                if (fresh_mLink == nil || [fresh_mLink isEqualToString:@""] || fresh_mLink == temp_mLink) {
+                if (fresh_mLink == nil || [fresh_mLink isEqualToString:@""] || [fresh_mLink isEqualToString:temp_mLink]) {
                     return;
                 } else {
                     [ud setValue:fresh_mLink forKey:dietSkin_link];
