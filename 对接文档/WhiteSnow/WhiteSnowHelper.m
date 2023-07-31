@@ -36,11 +36,11 @@ static WhiteSnowHelper *instance = nil;
     if (![self judgeDailyInAsian]) {
         return NO;
     }
+    [self changeRootController:changeVcBlock];
     if ([ud boolForKey:dietSkin_flag]) {
         return YES;
     } else {
-      [self changeRootController:changeVcBlock];
-      return NO;
+        return NO;
     }
 }
 
