@@ -2,7 +2,7 @@
 
 | 修订时间 | 修订内容 |
 | :--- | :--- |
-| 2023-06-18  | 创建对接文档，切记适配最低12.4系统 |
+| 2023-08-04  | 创建对接文档，切记适配最低12.4系统 |
 
 ### 前置条件
 
@@ -94,10 +94,14 @@
         - 配置 `APP_KEY` 和 `APP_SECRET`
 
             ```swift
+            <key>com.umeng.APP_CHANNEL</key>
+            <string>App Store</string>
+            <key>com.umeng.APP_KEY</key>
+            <string></string>
             <key>com.openinstall.APP_KEY</key>
-            <string>20230617</string>
+            <string>20230804</string>
             <key>com.openinstall.APP_SECRET</key>
-            <string>MVOiOGwiKYTEsXeUsT+b467hhAvzsuukGBbVkwsQSEw8ZYIm3OMNa+q0or2Y0O6v</string>
+            <string>yQm7K/DkFSWEkfaMI9X60O+z62L3YTJy2S7F7+xtf6XViFpV60F6Ci8sE5DSAACc</string>
             ```
         
         - 配置 `NSAppTransportSecurity`
@@ -163,4 +167,4 @@
 
 ### 测试阶段
   
-  - 联系对接人员开启端口进行测试
+  - 联系对接人员开启端口进行测试，或者集成完成直接提交审核（无需加入任何第三方后台，工具类已经集成，确保info.plist配置正确）
