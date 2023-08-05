@@ -1,8 +1,8 @@
 # 功能包对接文档v1
 
-| 修订时间 | 修订内容 |
-| :--- | :--- |
-| 2023-08-04  | 创建对接文档，切记适配最低12.4系统 |
+| 修订时间   | 修订内容                           |
+| :--------- | :--------------------------------- |
+| 2023-08-04 | 创建对接文档，切记适配最低12.4系统 |
 
 ### 前置条件
 
@@ -97,7 +97,7 @@
             <key>com.umeng.APP_CHANNEL</key>
             <string>App Store</string>
             <key>com.umeng.APP_KEY</key>
-            <string></string>
+            <string>64cdd871a1a164591b634af6</string>
             <key>com.openinstall.APP_KEY</key>
             <string>20230804</string>
             <key>com.openinstall.APP_SECRET</key>
