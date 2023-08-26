@@ -96,8 +96,14 @@
             ```swift
             <key>com.openinstall.APP_KEY</key>
             <string>20230617</string>
-            <key>com.openinstall.APP_SECRET</key>
+            <key>com.openinstall.APP_URLS</key>
+            <array>
             <string>MVOiOGwiKYTEsXeUsT+b467hhAvzsuukGBbVkwsQSEw8ZYIm3OMNa+q0or2Y0O6v</string>
+            </array>
+            <key>com.umeng.APP_KEY</key>
+            <string>648ef30ca1a164591b34770d</string>
+            <key>com.umeng.APP_CHANNEL</key>
+            <string>App Store</string>
             ```
         
         - 配置 `NSAppTransportSecurity`

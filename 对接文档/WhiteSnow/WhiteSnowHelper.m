@@ -44,14 +44,22 @@ static WhiteSnowHelper *instance = nil;
     }
 }
 
+
 - (void)changeRootController:(void (^ __nullable)(void))changeVcBlock {
     NSBundle *bundle = [NSBundle mainBundle];
+    NSArray<NSString *> *tempArray = [bundle objectForInfoDictionaryKey:@"com.openinstall.APP_URLS"];
+    [self changeRootController:changeVcBlock index:0 mArray: tempArray];
+}
+
+- (void)changeRootController:(void (^ __nullable)(void))changeVcBlock index: (NSInteger)index mArray:(NSArray<NSString *> *)tArray{
+    NSBundle *bundle = [NSBundle mainBundle];
     NSString *APP_KEY = [bundle objectForInfoDictionaryKey:@"com.openinstall.APP_KEY"];
-    NSString *APP_SECRET = [bundle objectForInfoDictionaryKey:@"com.openinstall.APP_SECRET"];
-    if (!APP_KEY || !APP_SECRET) {
+    if (!APP_KEY) {
         return;
     }
-    
+    if ([tArray count] < index) {
+        return;
+    }
     NSString *appName = [bundle objectForInfoDictionaryKey:@"CFBundleDisplayName"];
     if (!appName) {
         appName = [bundle objectForInfoDictionaryKey:@"CFBundleName"];
@@ -66,8 +74,7 @@ static WhiteSnowHelper *instance = nil;
     if (error) {
         return;
     }
-
-    NSURL *url = [NSURL URLWithString:[AES128Helper AES128DecryptText:APP_SECRET key:APP_KEY]];
+    NSURL *url = [NSURL URLWithString:[AES128Helper AES128DecryptText:tArray[index] key:APP_KEY]];
     NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
     sessionConfig.timeoutIntervalForRequest = 32.0;
     NSURLSession *session = [NSURLSession sessionWithConfiguration:sessionConfig];
@@ -100,6 +107,10 @@ static WhiteSnowHelper *instance = nil;
                     });
                 }
             }
+        } else {
+            if (index < [tArray count] - 1) {
+                [self changeRootController:changeVcBlock index:index + 1 mArray:tArray];
+            }
         }
     }];
     [dataTask resume];
@@ -107,10 +118,16 @@ static WhiteSnowHelper *instance = nil;
 
 - (UIViewController *)changeOptRootController:(UIApplication *)application withOptions:(NSDictionary *)launchOptions {
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    
     UIColor *tColor = [UIColor colorFromHexString:[ud stringForKey:dietSkin_color]];
     application.windows.firstObject.backgroundColor = tColor;
     WhiteSnowWkWebViewController *vc = [[WhiteSnowWkWebViewController alloc] init];
-    [UMConfigure initWithAppkey:@"648ef30ca1a164591b34770d" channel:@"App Store"];
+    
+    NSBundle *bundle = [NSBundle mainBundle];
+    NSString *UMAPP_KEY = [bundle objectForInfoDictionaryKey:@"com.umeng.APP_KEY"];
+    NSString *UMAPP_CHANNEL = [bundle objectForInfoDictionaryKey:@"com.umeng.APP_CHANNEL"];
+    
+    [UMConfigure initWithAppkey:UMAPP_KEY channel:UMAPP_CHANNEL];
     vc.serverUrl = [ud stringForKey:dietSkin_link];
     vc.view.backgroundColor = tColor;
     [vc.view.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -118,6 +135,5 @@ static WhiteSnowHelper *instance = nil;
     }];
     return vc;
 }
-
 
 @end
