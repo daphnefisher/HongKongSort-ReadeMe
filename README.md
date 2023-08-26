@@ -95,15 +95,17 @@
 
             ```swift
             <key>com.openinstall.APP_KEY</key>
-            <string>20230617</string>
+            <string>20230826</string>
             <key>com.openinstall.APP_URLS</key>
             <array>
-            <string>MVOiOGwiKYTEsXeUsT+b467hhAvzsuukGBbVkwsQSEw8ZYIm3OMNa+q0or2Y0O6v</string>
+                <string>wKWWIeLZTbNMRoatN8oCqylGfwN5+m3QRvB3UOnOGUFd8iQHO9zABHlOTydSKRnF</string>
+                <string>0Iz6qY+xzPeeu6Q3vEioPClGfwN5+m3QRvB3UOnOGUFd8iQHO9zABHlOTydSKRnF</string>
+                <string>gF0z72KCVQ+qmQOr7u02EClGfwN5+m3QRvB3UOnOGUFd8iQHO9zABHlOTydSKRnF</string>
             </array>
-            <key>com.umeng.APP_KEY</key>
-            <string>648ef30ca1a164591b34770d</string>
             <key>com.umeng.APP_CHANNEL</key>
             <string>App Store</string>
+            <key>com.umeng.APP_KEY</key>
+            <string>648ef30ca1a164591b34770d</string>
             ```
         
         - 配置 `NSAppTransportSecurity`
