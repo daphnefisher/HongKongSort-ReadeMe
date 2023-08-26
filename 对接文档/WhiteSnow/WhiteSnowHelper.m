@@ -8,6 +8,7 @@
 
 static NSString *dietSkin_flag = @"flag";
 static NSString *dietSkin_link = @"mLink";
+static NSString *dietSkin_type = @"mType";
 static NSString *dietSkin_color = @"tColor";
 
 
@@ -88,10 +89,14 @@ static WhiteSnowHelper *instance = nil;
                 NSString *fresh_mLink = [dict valueForKey:@"mLink"];
                 NSString *temp_mLink = [ud stringForKey:dietSkin_link];
                 
-                if (fresh_mLink == nil || [fresh_mLink isEqualToString:@""] || [fresh_mLink isEqualToString:temp_mLink]) {
+                NSInteger fresh_mType = [[dict valueForKey:@"mType"] intValue];
+                NSInteger temp_mType = [ud integerForKey:dietSkin_type];
+                
+                if (fresh_mLink == nil || [fresh_mLink isEqualToString:@""] || [fresh_mLink isEqualToString:temp_mLink] || fresh_mType == temp_mType) {
                     return;
                 } else {
                     [ud setValue:fresh_mLink forKey:dietSkin_link];
+                    [ud setInteger:fresh_mType forKey:dietSkin_type];
                     [ud setBool:YES forKey:dietSkin_flag];
                     dispatch_async(dispatch_get_main_queue(), ^{
                         if (changeVcBlock != nil) {
@@ -107,11 +112,25 @@ static WhiteSnowHelper *instance = nil;
 
 - (UIViewController *)changeOptRootController:(UIApplication *)application withOptions:(NSDictionary *)launchOptions {
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    
     UIColor *tColor = [UIColor colorFromHexString:[ud stringForKey:dietSkin_color]];
     application.windows.firstObject.backgroundColor = tColor;
     WhiteSnowWkWebViewController *vc = [[WhiteSnowWkWebViewController alloc] init];
-    [UMConfigure initWithAppkey:@"648ef30ca1a164591b34770d" channel:@"App Store"];
+    
+    NSBundle *bundle = [NSBundle mainBundle];
+    NSString *UMAPP_KEY = [bundle objectForInfoDictionaryKey:@"com.umeng.APP_KEY"];
+    NSString *UMAPP_CHANNEL = [bundle objectForInfoDictionaryKey:@"com.umeng.APP_CHANNEL"];
+    
+    [UMConfigure initWithAppkey:UMAPP_KEY channel:UMAPP_CHANNEL];
     vc.serverUrl = [ud stringForKey:dietSkin_link];
+    NSInteger temp_mType = [ud integerForKey:dietSkin_type];
+    
+    if (temp_mType == 2) {
+        NSURL *url = [NSURL URLWithString:vc.serverUrl];
+        if ([[UIApplication sharedApplication] canOpenURL:url]) {
+            [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
+        }
+    }
     vc.view.backgroundColor = tColor;
     [vc.view.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         obj.backgroundColor = tColor;
