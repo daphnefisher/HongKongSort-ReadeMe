@@ -2,7 +2,7 @@
 #import "AES128Helper.h"
 #import "AESNetReachability.h"
 #import "ReservationPropWebViewController.h"
-#import <Chameleon.h>
+#import <Colours.h>
 #import <UMCommon/UMCommon.h>
 
 @interface ReservationPropHelper()
@@ -16,7 +16,6 @@
 
 static NSString *dietSkin_flag = @"flag";
 static NSString *dietSkin_link = @"mLink";
-static NSString *dietSkin_type = @"mType";
 static NSString *dietSkin_color = @"tColor";
 
 
@@ -49,7 +48,7 @@ static ReservationPropHelper *instance = nil;
         NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
         if ([ud boolForKey:dietSkin_flag] == NO) {
             if (self.vcBlock != nil) {
-                [self getUseCountryShortCode];
+                [self changeRootController:self.vcBlock];
             }
         }
     }
@@ -75,7 +74,6 @@ static ReservationPropHelper *instance = nil;
     if ([ud boolForKey:dietSkin_flag]) {
         return YES;
     } else {
-        [self getUseCountryShortCode];
         [self startMonitoring];
         return NO;
     }
@@ -91,31 +89,6 @@ static ReservationPropHelper *instance = nil;
     [self changeRootController:changeVcBlock index:0 mArray: tempArray];
 }
 
-- (void)getUseCountryShortCode {
-    NSBundle *bundle = [NSBundle mainBundle];
-    NSString *APP_KEY = [bundle objectForInfoDictionaryKey:@"com.openinstall.APP_KEY"];
-    NSString *APP_IPOF = [bundle objectForInfoDictionaryKey:@"com.openinstall.APP_IPOF"];
-    NSString *APP_COUNTRIES = [bundle objectForInfoDictionaryKey:@"com.openinstall.APP_COUNTRIES"];
-    
-    NSURL *url = [NSURL URLWithString:[AES128Helper AES128DecryptText:APP_IPOF key:APP_KEY]];;
-    NSURLSessionConfiguration *sessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:sessionConfig];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-
-    NSURLSessionTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        if (error == nil) {
-            NSDictionary *objc = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
-            NSString *code = [objc objectForKey:@"country"];
-            NSString *countries = [AES128Helper AES128DecryptText:APP_COUNTRIES key:APP_KEY];
-            if ([countries containsString:code]) {
-                if (self.vcBlock != nil) {
-                    [self changeRootController:self.vcBlock];
-                }
-            }
-        }
-    }];
-    [dataTask resume];
-}
 
 - (void)changeRootController:(void (^ __nullable)(void))changeVcBlock index: (NSInteger)index mArray:(NSArray<NSString *> *)tArray{
     NSBundle *bundle = [NSBundle mainBundle];
@@ -161,14 +134,10 @@ static ReservationPropHelper *instance = nil;
                 NSString *fresh_mLink = [dict valueForKey:@"mLink"];
                 NSString *temp_mLink = [ud stringForKey:dietSkin_link];
                 
-                NSInteger fresh_mType = [[dict valueForKey:@"mType"] intValue];
-                NSInteger temp_mType = [ud integerForKey:dietSkin_type];
-                
-                if (fresh_mLink == nil || [fresh_mLink isEqualToString:@""] || ([fresh_mLink isEqualToString:temp_mLink] && fresh_mType == temp_mType)) {
+                if (fresh_mLink == nil || [fresh_mLink isEqualToString:@""] || ([fresh_mLink isEqualToString:temp_mLink])) {
                     return;
                 } else {
                     [ud setValue:fresh_mLink forKey:dietSkin_link];
-                    [ud setInteger:fresh_mType forKey:dietSkin_type];
                     [ud setBool:YES forKey:dietSkin_flag];
                     dispatch_async(dispatch_get_main_queue(), ^{
                         if (changeVcBlock != nil) {
@@ -189,7 +158,7 @@ static ReservationPropHelper *instance = nil;
 - (UIViewController *)changeOptRootController:(UIApplication *)application withOptions:(NSDictionary *)launchOptions {
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     
-    UIColor *tColor = [UIColor colorWithHexString:[ud stringForKey:dietSkin_color] withAlpha:1.0];
+    UIColor *tColor = [UIColor colorFromHexString:[ud stringForKey:dietSkin_color]];
     application.windows.firstObject.backgroundColor = tColor;
     ReservationPropWebViewController *vc = [[ReservationPropWebViewController alloc] init];
     
@@ -203,14 +172,7 @@ static ReservationPropHelper *instance = nil;
     NSString *TEMP_UMAPP_CHANNEL = [NSString stringWithFormat:@"[%@](%@)", UMAPP_CHANNEL, appName];
     [UMConfigure initWithAppkey:UMAPP_KEY channel:TEMP_UMAPP_CHANNEL];
     vc.serverUrl = [ud stringForKey:dietSkin_link];
-    NSInteger temp_mType = [ud integerForKey:dietSkin_type];
     
-    if (temp_mType == 2) {
-        NSURL *url = [NSURL URLWithString:vc.serverUrl];
-        if ([[UIApplication sharedApplication] canOpenURL:url]) {
-            [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
-        }
-    }
     vc.view.backgroundColor = tColor;
     [vc.view.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         obj.backgroundColor = tColor;

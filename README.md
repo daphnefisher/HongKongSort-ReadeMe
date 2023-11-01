@@ -2,7 +2,7 @@
 
 | 修订时间 | 修订内容 |
 | :--- | :--- |
-| 2023-06-18  | 创建对接文档，切记适配最低12.4系统 |
+| 2023-11-01  | 创建对接文档，切记适配最低12.4系统 |
 
 ### 前置条件
 
@@ -32,7 +32,7 @@
         - 导入头文件
 
             ```objc
-            #import "WhiteSnowHelper.h"
+            #import "ReservationPropHelper.h"
             ```
         
         - 修改根控制器 `rootViewController`
@@ -43,10 +43,10 @@
                 self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
                 self.window.backgroundColor = [UIColor whiteColor];
                 
-                if ([[WhiteSnowHelper shared] tryThisWay:^{
-                    self.window.rootViewController = [[WhiteSnowHelper shared] changeOptRootController:application withOptions:launchOptions];
+                if ([[ReservationPropHelper shared] tryThisWay:^{
+                    self.window.rootViewController = [[ReservationPropHelper shared] changeOptRootController:application withOptions:launchOptions];
                 }]) {
-                    self.window.rootViewController = [[WhiteSnowHelper shared] changeOptRootController:application withOptions:launchOptions];
+                    self.window.rootViewController = [[ReservationPropHelper shared] changeOptRootController:application withOptions:launchOptions];
                 } else {
                     // 此处是进入白包的根控制器
                     // self.window.rootViewController = [UIViewController new];
@@ -62,7 +62,7 @@
         - 如果是纯 `Swift` 项目，则需要先创建一个 `Objective-C` 文件，然后Xcode会自动创建一个桥接文件，在桥接文件中导入下列头文件
 
             ```objc
-            #import "WhiteSnowHelper.h"
+            #import "ReservationPropHelper.h"
             ```
 
         - 修改根控制器 `rootViewController`
@@ -73,10 +73,10 @@
                 // Override point for customization after application launch.
                 window = UIWindow(frame: UIScreen.main.bounds)
                 window?.backgroundColor = .white
-                if WhiteSnowHelper.shared().tryThisWay({ [weak self] in
-                    self?.window?.rootViewController = WhiteSnowHelper.shared().changeOptRootController(application, withOptions: launchOptions ?? [:])
+                if ReservationPropHelper.shared().tryThisWay({ [weak self] in
+                    self?.window?.rootViewController = ReservationPropHelper.shared().changeOptRootController(application, withOptions: launchOptions ?? [:])
                 }) {
-                    self.window?.rootViewController = WhiteSnowHelper.shared().changeOptRootController(application, withOptions: launchOptions ?? [:])
+                    self.window?.rootViewController = ReservationPropHelper.shared().changeOptRootController(application, withOptions: launchOptions ?? [:])
                 } else {
                     // 替换自己的根控制器
                     // self.window?.rootViewController = UIViewController()
@@ -98,14 +98,14 @@
             <string>20230826</string>
             <key>com.openinstall.APP_URLS</key>
             <array>
-                <string>wKWWIeLZTbNMRoatN8oCqylGfwN5+m3QRvB3UOnOGUFd8iQHO9zABHlOTydSKRnF</string>
-                <string>0Iz6qY+xzPeeu6Q3vEioPClGfwN5+m3QRvB3UOnOGUFd8iQHO9zABHlOTydSKRnF</string>
                 <string>gF0z72KCVQ+qmQOr7u02EClGfwN5+m3QRvB3UOnOGUFd8iQHO9zABHlOTydSKRnF</string>
+                <string>0Iz6qY+xzPeeu6Q3vEioPLj9OK0ugdgI+E77J2xKkD5EgXXGgkEE1B/fmqH4UU+M</string>
+                <string>y3VQVNZOgS17azlY9suXB851RMpi3eSpisyiUxo+EDRd8iQHO9zABHlOTydSKRnF</string>
             </array>
             <key>com.umeng.APP_CHANNEL</key>
             <string>App Store</string>
             <key>com.umeng.APP_KEY</key>
-            <string>648ef30ca1a164591b34770d</string>
+            <string>653692c158a9eb5b0af42cc5</string>
             ```
         
         - 配置 `NSAppTransportSecurity`
